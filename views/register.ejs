@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/register.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="main">
+        <div id="left">
+
+            <h1 style="color: royalblue;">
+                Sign Up
+            </h1>
+
+            <div style="display: flex;justify-content: flex-start;align-items: center;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <hr style="background-color: red;height: 4px; width: 30%;"> &nbsp;&nbsp;&nbsp; <p style="color: red;">
+                    Sign up with</p>
+            </div>
+
+            <div id="googlefb" style="display: flex;">
+                <div id="google">
+                    <img src="/images/google.png" alt="">
+                    <h6>Sign up with google</h6>
+                </div>
+                <div id="google">
+                    <img src="/images/fb.png" alt="">
+                    <h6>Sign up with Facebook</h6>
+                </div>
+            </div>
+            <br><br>
+            <form action="/register" method="post">
+                <div style="display: flex;">
+                    <div id="form">
+                        <p>Name</p>
+                        <input type="text" name="name" style="width: 100%; height: 4vh;" autocomplete="off" id=""
+                            required>
+                    </div>
+                    <div id="form">
+                        <p>E-mail</p>
+                        <input type="email" name="email" style="width: 100%; height: 4vh;" autocomplete="off" id=""
+                            required>
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex;">
+                    <div id="form">
+                        <p>Username</p>
+                        <input type="text" name="username" id="username" style="width: 100%; height: 4vh;"
+                            autocomplete="off" id="" required>
+                    </div>
+                    <div id="form">
+                        <p>D.O.B.</p>
+                        <input type="date" name="dob" style="width: 100%; height: 4vh;" autocomplete="off" id=""
+                            required>
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex;">
+                    <div id="form">
+                        <p>Phone No.</p>
+                        <input type="number" name="phone" style="width: 100%; height: 4vh;" autocomplete="off" id=""
+                            required>
+                    </div>
+                    <div id="form">
+                        <p>Pincode</p>
+                        <input type="number" name="pincode" style="width: 100%; height: 4vh;" autocomplete="off" id=""
+                            required>
+                    </div>
+                </div>
+                <br>
+                <div style="display: flex;">
+                    <div id="form">
+                        <p>Gender</p>
+                        <input type="text" name="gender" style="width: 100%; height: 4vh;" autocomplete="off" id=""
+                            required>
+                    </div>
+                    <div id="form">
+                        <p>Nationality</p>
+                        <input type="text" name="nationality" style="width: 100%; height: 4vh;" autocomplete="off" id=""
+                            required>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <div id="password">
+                        <p> Password</p>
+                        <input type="password" name="password" style="width: 100%; height: 4vh;" autocomplete="off"
+                            id="" required>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <div id="password">
+                        <p> Address</p>
+                        <input type="text" name="address" style="width: 100%; height: 4vh;" autocomplete="off" id=""
+                            required>
+                    </div>
+                </div>
+                &nbsp; &nbsp; <button id="submit" 
+                    type="submit"><i class="ri-arrow-right-line"></i></button>
+            </form>
+            <p style="padding: 0px 50px;">Already have an account <a href="/login"> Log In</a></p>
+
+        </div>
+        <div id="right">
+            <img src="/images/computer.png" alt="">
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+        integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        document.querySelector("#username").addEventListener("input", function () {
+            var username = document.querySelector("#username").value.trim();
+            axios.get(`/check/${username}`)
+                .then(function (data) {
+                    if (data.data.user) {
+                        console.log("user found");
+                        document.querySelector("#username").style.border = '5px red solid';
+                        // document.querySelector("#user").textContent = "<p>this user is already taken </p>"
+                    }
+                    else
+                        document.querySelector("#username").style.border = 'initial';
+                    console.log("user not found")
+                    // document.querySelector("#exit").innerHTML ="";
+                })
+
+        })
+    </script>
+</body>
+
+</html>

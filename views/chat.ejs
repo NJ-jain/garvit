@@ -1,0 +1,200 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/chat.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+          #send:hover {
+            /* background-color: black; */
+            color: purple;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div id="left">
+            <div id="dp">
+                <img id="photo" src=" /images/profile/<%= foundUser.profilePic %>" alt="">
+                <form id="photuform" action="/fileimage" method="post" enctype="multipart/form-data"
+                    style="display: none;">
+                    <input type="file" name="image" id="choose">
+                    <input type="submit" name="" id="submit">
+                </form>
+            </div>
+            <h3 id="name">
+                <%= foundUser.name %>
+                <a href="/logout
+                "><button>logout</button></a>
+            </h3>
+        </div>
+        <div id="right">
+            <div id="names">
+                <div id="box1">
+                    <h1 style="color: rgb(24, 54, 144); padding: 40px 50px;">Chat</h1>
+                    <div id="search">
+                        <input type="text" name="search"
+                            style="width: 90% ; height: 100%; border: none; outline : none; " placeholder="     Search">
+                        <i style="cursor:pointer ;" class="ri-search-2-line"></i>
+                    </div>
+                </div>
+                <div id="box2">
+                    <ul type="none" style="padding-left: 10% ;">
+                        <% allUser.forEach(function(elem){ %>
+                            <% if(foundUser.name !=elem.name) {%>
+                                <a style="text-decoration: none; color: royalblue  ;" href="/chat/<%= elem.username %>">
+                                    <li>
+                                        <div id="users">
+                                            <div id="circle">
+                                                <img id="photo" src="/images/profile/<%= elem.profilePic %> " alt="">
+                                            </div>
+                                            &nbsp; &nbsp;
+                                            <div>
+                                                <h2>
+                                                    <%= elem.name %>
+                                                </h2>
+                                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint?</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <br>
+                                </a>
+                            <% } %>
+                        <%})%>
+                    </ul>
+                </div>
+            </div>
+            <div id="chat" style=" background-position: center; background-repeat: no-repeat;"> 
+                <br>
+                <div id="users">
+                    <div id="circle">
+                        <img id="photo" src="/images/profile/<%= name.profilePic %> " alt="">
+                    </div>
+                    &nbsp; &nbsp;
+                    <div>
+                        <h2>
+                            <%= name.name %>
+                        </h2>
+                        <h2 id="username" >
+                            <%= name.username %>
+                        </h2>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint?</p>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div id="users" style="width: 90% ; height: 80%; position: relative;">
+                    <div id="users displaybox" class="displaybox"
+                        style=" color: black; height: 80%; overflow: auto; width: 95%; position: absolute; top: 2%; border: 2px solid royalblue; z-index: 55;">
+
+
+                    </div>
+                    <div id="users" style="height: 10%;width: 95%; position: absolute; bottom: 5%; border: 2px solid royalblue; display: flex; justify-content: space-between; align-items: center;">
+                        <textarea style=" resize: none; font-size: 2vh;" name="" id="text" placeholder="Type a Message" cols="95" rows="3"></textarea>
+                        <i style="font-size: 1.5rem; " class="ri-send-plane-fill" id="send"></i>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.js"
+    integrity="sha512-VJ6+sp2E5rFQk05caiXXzQd1wBABpjEj1r5kMiLmGAAgwPItw1YpqsCCBtq8Yr1x6C49/mTpRdXtq8O2RcZhlQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        document.querySelector("#photo").addEventListener("click", function () {
+            document.querySelector("#choose").click();
+        })
+        document.querySelector("#choose").addEventListener("change", function () {
+            document.querySelector("#submit").click();
+        })
+        const detailsElement = document.querySelector('.details-example');
+
+        detailsElement.addEventListener('toggle', event => {
+            if (event.target.open) {
+                console.log('open');
+            } else {
+                console.log('closed');
+            }
+        });
+
+
+
+// socket io starts
+     var naam = "";
+
+    var socket = io();
+
+    document.querySelector("#send").addEventListener("click", function () {
+      if (document.querySelector("textarea").value.trim().length > 0) {
+        var naam =  document.querySelector("#username").innerHTML.trim();
+        console.log(naam);
+        console.log(document.querySelector("textarea"))
+        socket.emit("private message", document.querySelector("textarea").value , naam);
+        document.querySelector("textarea").value = "";
+      }
+    });
+
+
+    socket.on('private message', function (message) {
+            if (naam == message.username) {
+                document.querySelector(".displaybox").innerHTML += `<div id="sendmessage" class="a" style="width: 50%;  float : right ;
+      clear : both ; min-height:10%; background-color : greenyellow;  role="alert">
+      ${message.message}
+      </div>  <br>`
+            }
+            else {
+                document.querySelector(".displaybox").innerHTML += `<div id="recievemessage" class="a" style="width: 50%; float : left ;
+      clear : both ; min-height:10%; background-color : green;color : white; role="alert">
+        ${message.message}
+      </div> <br> <br> `
+            }
+            var objDiv = document.querySelector(".displaybox");
+          objDiv.scrollTop = objDiv.scrollHeight;
+        })
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+<!-- <div id="chat" style=" background-position: center; background-repeat: no-repeat;">
+    <br>
+    <div id="users">
+        <div id="circle">
+            <img id="photo" src="/images/profile/default.jpg" alt="">
+        </div>
+        &nbsp; &nbsp;
+        <div>
+            <h2>
+                Group chat
+            </h2>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint?</p>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div id="users" style="width: 90% ; height: 80%; position: relative;">
+        <div id="users displaybox" class="displaybox"
+            style=" color: black; height: 80%; overflow: auto; width: 95%; position: absolute; top: 2%; border: 2px solid royalblue; z-index: 55;">
+
+
+        </div>
+        <div id="users"
+            style="height: 10%;width: 95%; position: absolute; bottom: 5%; border: 2px solid royalblue; display: flex; justify-content: space-between; align-items: center;">
+            <textarea style=" resize: none; font-size: 2vh;" name="" id="text" placeholder="Type a Message"
+                cols="95" rows="3"></textarea>
+            <i style="font-size: 1.5rem; " class="ri-send-plane-fill" id="send"></i>
+        </div>
+    </div>
+</div> --> -->

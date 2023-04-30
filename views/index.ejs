@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/chat.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" -->
+    <!-- integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous"> -->
+    <style>
+        #send:hover {
+            /* background-color: black; */
+            color: purple;
+
+        }
+
+        #data {
+            overflow-x: hidden;
+            overflow-y: visible;
+            height: 500px;
+        }
+
+        #details ul li a #users {
+            color: black;
+        }
+
+        #details ul li a #users:hover {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="main">
+        <div id="left">
+            <i id="close" class="ri-close-circle-fill"></i>
+            <div id="dp">
+                <img id="photo" src=" /images/profile/<%= foundUser.profilePic %>" alt="">
+                <form id="photuform" action="/fileimage" method="post" enctype="multipart/form-data"
+                    style="display: none;">
+                    <input type="file" name="image" id="choose">
+                    <input type="submit" name="" id="submit">
+                </form>
+            </div>
+
+
+            <h2 id="username" style="display: none;">
+                <%= foundUser.username %>
+            </h2>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div id="details">
+                <ul type=none>
+                    <li>
+                        <div id="users" style="color: black ;">
+                            <p>Name : <%=foundUser.name %>
+                            </p>
+                        </div>
+                    </li>
+                    <br>
+                    <li>
+                        <div id="users" style="color: black ;">
+                            <p>Email : <%=foundUser.email %>
+                            </p>
+                        </div>
+                    </li>
+                    <br>
+                    <li>
+                        <div id="users" style="color: black ;">
+                            <p>Mobile No. : <%=foundUser.phone %>
+                            </p>
+                        </div>
+                    </li>
+                    <br>
+                    <li>
+                        <div id="users" style="color: black ;">
+                            <p>Address : <%=foundUser.address %>
+                            </p>
+                        </div>
+                    </li>
+                    <br><br><br><br><br>
+                    <li>
+                        <a href="/logout" style="text-decoration: none; ">
+                            <div id="users" style=" display: flex; align-items: center; justify-content: center;">
+                                <h1>logout</h1>
+                            </div>
+                        </a>
+                    </li>
+
+
+
+
+                </ul>
+            </div>
+
+
+        </div>
+        <div id="right">
+            <div id="dpreal">
+                <img id="photo1" src="/images/profile/<%= foundUser.profilePic %>" alt="">
+
+            </div>
+            <div id="overlay">
+                <button id="enter"> enter to Group chat</button>
+            </div>
+            <div id="names">
+                <div id="box1">
+                    <h1 style="color: rgb(24, 54, 144); ">Chat</h1>
+                    <div id="search">
+                        <input type="text" name="search"
+                            style="width: 90% ; height: 100%; border: none; outline : none; " placeholder="     Search">
+                        <i style="cursor:pointer ;" class="ri-search-2-line"></i>
+                    </div>
+                </div>
+                <div id="box2">
+                    <ul type="none" style="padding-left: 10% ;">
+                        <li>
+                            <div id="users" class="group">
+                                <div id="circleforlist">
+                                    <img id="photo" src="/images/profile/default.jpg " alt="">
+                                </div>
+                                &nbsp; &nbsp;
+                                <div>
+                                    <h2>
+                                        Group Chat
+                                    </h2>
+                                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint?</p>
+                                </div>
+                            </div>
+                        </li>
+                        <br>
+                    </ul>
+                    <ul id="naam" type="none" style="padding-left: 10%;"></ul>
+
+                </div>
+            </div>
+            <div id="chat" class="groupChat"
+                style=" background-position: center; background-repeat: no-repeat; display: block;">
+                <br>
+                <div id="users">
+                    <div id="circle">
+                        <img id="photo" src="/images/profile/default.jpg" alt="">
+                    </div>
+                    &nbsp; &nbsp;
+                    <div id="title">
+                        <h2>
+                            Group chat
+                        </h2>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint?</p>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div id="display">
+                    <div id="users displaybox" class="displaybox"
+                        style=" color: black; height: 80%; overflow: auto; width: 95%; position: absolute; top: 2%; border: 2px solid royalblue; z-index: 55;">
+
+
+                    </div>
+                    <div id="users"
+                        style="height: 10%;width: 95%; position: absolute; bottom: 5%; border: 2px solid royalblue; display: flex; justify-content: space-between; align-items: center;">
+                        <textarea style=" resize: none; font-size: 2vh;" name="" id="text" placeholder="Type a Message"
+                            cols="95" rows="3"></textarea>
+                        <i style="font-size: 1.5rem; " class="ri-send-plane-fill" id="send"></i>
+                    </div>
+                </div>
+            </div>
+            <div id="chat" class="personalChat"
+                style=" background-position: center; background-repeat: no-repeat; display: none;"></div>
+            <i id="arrow" class="ri-arrow-down-s-fill"></i>
+        </div>
+    </div>
+    <!-- socketio cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.js"
+        integrity="sha512-VJ6+sp2E5rFQk05caiXXzQd1wBABpjEj1r5kMiLmGAAgwPItw1YpqsCCBtq8Yr1x6C49/mTpRdXtq8O2RcZhlQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- axios cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+        integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+
+        // axios 
+
+        var naam = "";
+        var socket = io();
+        var userlist;
+        let fullname = "";
+
+        document.querySelector("#send").addEventListener("click", function () {
+            if (document.querySelector("textarea").value.trim().length > 0) {
+                socket.emit("msg", document.querySelector("textarea").value);
+                socket.emit("private message", document.querySelector("textarea").value);
+                document.querySelector("textarea").value = "";
+            }
+        });
+
+        document.querySelector("#enter").addEventListener("click", function () {
+            naam = document.querySelector("#username").innerHTML.trim();
+            socket.emit("naam", naam);
+            document.querySelector("#overlay").style.display = " none";
+            console.log(naam);
+
+
+        })
+
+
+        socket.on('msg', function (message) {
+            let sender = message.username;
+            let senderFullName;
+            axios.get(`/list/${sender}`)
+                        .then(function (name) {
+                            senderFullName = name.data.realname.name;
+                            console.log(senderFullName);
+            if (naam == sender) {
+                document.querySelector(".displaybox").innerHTML += `<div  class="a" style="width: 50%; display : block ;  float : right ;
+      clear : both ;   box-shadow: 1px 10px 10px #acd0ee;
+    background-color: white;
+    border-radius: 10px;
+   
+    padding: 0px 5px; "  > <p>${senderFullName} :- </p>
+      <h2 style = "margin-left : 10px">${message.message}</h2>
+      </div> <br> <br><br> <br>`
+
+            }
+            else {
+                document.querySelector(".displaybox").innerHTML += `<div  class="a"  style=" display : block ;  width: 50%; float : left ; 
+      clear : both ;  box-shadow: 1px 10px 10px #acd0ee;
+    background-color: white;
+    border-radius: 10px;
+   
+    padding: 0px 5px;" >
+      <p>${senderFullName} :- </p>
+     <h2 style = "margin-left : 10px">${message.message}</h2>
+        
+      </div> <br><br><br> <br> `
+            }
+
+            var objDiv = document.querySelector(".displaybox");
+            objDiv.scrollTop = objDiv.scrollHeight;
+        })
+
+        })
+
+
+        const sendMyMessage = (room, loggedInUser, message) => {
+            // console.log(chatWidowId);
+            document.querySelector(`.${room}`).innerHTML += `<div id="sendmessage" class="a" style="width: 50%;  float : right ;
+      clear : both ; min-height:10%;   box-shadow: 1px 10px 10px #acd0ee;
+    background-color: white;
+    border-radius: 10px;
+    padding: 0px 5px;">
+      ${message}
+
+      </div>  <br>`
+    }
+
+
+
+
+        const sendMessage = (room) => {
+            let loggedInUser = naam;
+            let message = document.querySelector("#personaltext").value;
+            console.log(message);
+            // $('#' + room).find('.messageText').val('');
+            socket.emit('personalmessage', { room: room, message: message, from: loggedInUser });
+            sendMyMessage(room, loggedInUser, message)
+            document.querySelector("#personaltext").value = "";
+        }
+
+        socket.on('personalmessage', function (msg) {
+        
+
+                axios.get(`/say/${msg.message}`)
+                .then(function (data) {
+                    totaluserlist = data.data.username;
+                })
+            //If chat window not opened with this roomId, open it
+        console.log(document.querySelectorAll(`.privateChat .${msg.room}`).length);
+            if(document.querySelectorAll(`.privateChat .${msg.room}`).length === 0)
+
+            {
+                openChatWindow(msg.room)
+              // console.log(msg);
+            // var sender = msg.from;
+            let room = msg.room;
+
+
+            document.querySelector(`.${room}`).innerHTML += `<div id="sendmessage" class="a" style="width: 50%;  float : left ;
+      clear : both ; min-height:10%;   box-shadow: 1px 10px 10px #acd0ee;
+    background-color: white;
+    border-radius: 10px;
+   
+    padding: 0px 5px;">
+      ${msg.message}
+      </div>  <br>`
+
+
+
+            var objDiv = document.querySelector(".displaybox");
+            objDiv.scrollTop = objDiv.scrollHeight;
+    }
+     if(document.querySelectorAll(`.privateChat .${msg.room}`).length >0)
+    {
+          // console.log(msg);
+            // var sender = msg.from;
+            let room = msg.room;
+
+
+            document.querySelector(`.${room}`).innerHTML += `<div id="sendmessage" class="a" style="width: 50%;  float : left ;
+      clear : both ; min-height:10%;   box-shadow: 1px 10px 10px #acd0ee;
+    background-color: white;
+    border-radius: 10px;
+   
+    padding: 0px 5px;">
+      ${msg.message}
+      </div>  <br>`
+
+
+
+            var objDiv = document.querySelector(".displaybox");
+            objDiv.scrollTop = objDiv.scrollHeight;
+
+    }
+    
+        })
+            
+
+        const openChatWindow = (room) => {
+
+            document.querySelector('.personalChat').innerHTML =
+                `<br>
+                <div id="users">
+                    <div id="circle">
+                        <img id="photo" src="/images/profile/default.jpg" alt="">
+                    </div>
+                    &nbsp; &nbsp;
+                    <div id="title">
+                        <h2>
+                            Personal chat
+                        </h2>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint?</p>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div id="display">
+                    <div id="users displaybox" class="${room}"
+                            style=" color: black; height: 80%; overflow: auto; width: 95%; position: absolute; top: 2%; border: 2px solid royalblue; z-index: 55;">
+
+
+                        </div>
+                        <div id="users"
+                            style="height: 10%;width: 95%; position: absolute; bottom: 5%; border: 2px solid royalblue; display: flex; justify-content: space-between; align-items: center;">
+                            <textarea style=" resize: none; font-size: 2vh;" name="" id="personaltext"
+                                placeholder="Type a Message" cols="95" rows="3"></textarea>
+                            <i style="font-size: 1.5rem; " class="ri-send-plane-fill"    onclick="sendMessage('${room}')"></i>
+                        </div>
+                </div>`
+            document.querySelector(".groupChat").style.display = "none";
+            document.querySelector(".personalChat").style.display = "block";
+
+
+        }
+
+
+        function makeid(length) {
+                var result = '';
+                var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var charactersLength = characters.length;
+                for (var i = 0; i < length; i++) {
+                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                }
+                return result;
+            }
+
+
+
+        const createRoom = (id) => {
+            console.log("room created")
+            let loggedInUser = naam;
+            let room = makeid(5);
+            // console.log(makeid(5));
+            // room = room.toString().replace(".", "_");
+            console.log(id);
+            socket.emit('create', { room: room, user: loggedInUser, withUserId: id });
+            openChatWindow(room);
+        }
+
+
+        socket.on('invite', function (data) {
+
+            socket.emit("joinRoom", data)
+        });
+
+
+        
+        // socket.on('topname', function (data) {
+        //     console.log(data);
+        //     axios.get(`/list/${data.user}`)
+        //         .then(function (data) {
+        //             fullname = data.realname;
+        //             console.log(data.realname)
+        //         })
+
+        // })
+
+        socket.on("private message", function (message) {
+            axios.get(`/names/${message.msg}/${message.username}`)
+                .then(function (data) {
+                    totaluserlist = data.data.username;
+                })
+        })
+
+
+        var clutter = "";
+        socket.on('updateUserList', function (data) {
+            console.log(data)
+            for (var i = 0; i < data.data.length; i++) {
+                var realname;
+                var name = data.data[i];
+                let id = data.id[i];
+                if (naam != data.data[i]) {
+                    axios.get(`/list/${data.data[i]}`)
+                        .then(function (name) {
+                            realname = name.data.realname.name;
+                            console.log(name.data.realname.name);
+                            document.querySelector("#naam").innerHTML += `<li id="online" data-id="${id}" onclick="createRoom('${id}')"><div id="users"> <div> <h2> ${realname}<h2> </div></li> <br>`
+
+                        })
+                }
+                else if (naam === data.id[i]) {
+                    naamid = id;
+                }
+            }
+            document.querySelector('#box2 #naam').innerHTML = clutter;
+        });
+
+
+
+
+        // console.log(arr[0].username);
+
+        // multer js
+        document.querySelector("#photo").addEventListener("click", function () {
+            document.querySelector("#choose").click();
+        })
+        document.querySelector("#choose").addEventListener("change", function () {
+            document.querySelector("#submit").click();
+        })
+
+        // document.querySelector("#username").addEventListener("")
+
+        // for Responsive
+        var flag = 0;
+        document.querySelector("#arrow").addEventListener("click", function () {
+            if (flag === 0) {
+                document.querySelector("#names").style.display = "initial";
+                document.querySelector("#chat").style.display = "none";
+                flag++;
+            }
+            else if (flag === 1) {
+                document.querySelector("#names").style.display = "none";
+                document.querySelector("#chat").style.display = "initial";
+                flag--;
+            }
+        })
+
+        var profiledetails = 0;
+
+        document.querySelector("#photo1").addEventListener("click", function () {
+            if (profiledetails === 0) {
+                document.querySelector("#left").style.display = "initial";
+                document.querySelector("#right").style.display = "none";
+                profiledetails++;
+            }
+
+        })
+
+        document.querySelector("#close").addEventListener("click", function () {
+            if (profiledetails === 1) {
+                document.querySelector("#left").style.display = "none";
+                document.querySelector("#right").style.display = "initial";
+                profiledetails--;
+            }
+        })
+
+
+        document.querySelector(".group").addEventListener("click" , function(){
+            document.querySelector(".groupChat").style.display = "block";
+            document.querySelector(".personalChat").style.display = "none";
+        })
+
+
+    </script>
+</body>
+
+</html>

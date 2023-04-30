@@ -1,0 +1,41 @@
+ <li>
+                                    <div id="users" class="">
+                                        <div id="circleforlist">
+                                            <img id="photo" src="/images/profile/<%= elem.profilePic %> " alt="">
+                                        </div>
+                                        <div id="status" style="width: 10px; height: 10px; border-radius: 50%; "></div>
+                                        &nbsp; &nbsp;
+                                        <div>
+
+                                            <h2>
+                                                <%= elem.name %>
+                                            </h2>
+                                            <h1 id="all" style="display: none;">
+                                                <%= elem.username %>
+                                            </h1>
+                                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint?</p>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+
+
+
+ <% allUser.forEach(function(elem){ %>
+                            <% if(foundUser.name !=elem.name) {%>
+
+                               
+                                <br>
+
+                                <% } %>
+                                    <%})%>  
+
+
+
+
+
+
+
+
+
